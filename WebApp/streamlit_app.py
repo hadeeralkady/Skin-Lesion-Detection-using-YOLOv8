@@ -130,11 +130,19 @@ Not intended for clinical diagnosis.
 # =====================================================
 @st.cache_resource
 def load_model():
-    return YOLO(
-        "C:/Users/hadee/runs/detect/train/finetune_results/weights/best.pt"
-    )
+    try:
+        model = YOLO("models/best.pt")
+        return model
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
 
+# Load model once
 model = load_model()
+
+# Stop app execution if model failed to load
+if model is None:
+    st.stop()
 
 # =====================================================
 # Header
