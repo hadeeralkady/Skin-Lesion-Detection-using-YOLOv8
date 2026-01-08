@@ -19,83 +19,6 @@ if "show_intro" not in st.session_state:
     st.session_state.show_intro = True
 
 # =====================================================
-# Global CSS – Dark Medical Theme
-# =====================================================
-st.markdown("""
-<style>
-html, body {
-    background-color: #0e1117;
-    color: #e5e7eb;
-}
-
-.block-container {
-    padding-top: 2rem;
-}
-
-.stSidebar {
-    background-color: #0e1117;
-    border-right: 1px solid #1f2937;
-}
-
-h1 {
-    font-size: 40px;
-    text-align: center;
-    color: #e5e7eb;
-}
-
-.subtitle {
-    font-size: 16px;
-    color: #9ca3af;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.section-title {
-    color: #93c5fd;
-    margin-bottom: 10px;
-}
-
-.card {
-    background-color: #111827;
-    border: 1px solid #1f2937;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 10px;
-}
-
-/* زرار Run Detection مميز */
-.stButton > button[key="run-left"] {
-    background-color: #10b981 !important;  /* أخضر مميز */
-    color: white !important;
-    border-radius: 10px;
-    height: 45px;
-    border: none;
-}
-.stButton > button[key="run-left"]:hover {
-    background-color: #059669 !important; /* أخضر أغمق عند المرور */
-}
-
-.stButton > button {
-    background-color: #2563eb;
-    color: white;
-    border-radius: 10px;
-    height: 45px;
-    border: none;
-}
-
-.stButton > button:hover {
-    background-color: #1d4ed8;
-}
-
-.footer {
-    text-align: center;
-    color: #6b7280;
-    font-size: 13px;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# =====================================================
 # Sidebar – Navigation & Settings
 # =====================================================
 st.sidebar.markdown("## 🧭 Navigation")
@@ -193,7 +116,6 @@ if page == "Detection":
             image = Image.open(uploaded_file).convert("RGB")
             st.image(image, use_container_width=True)
 
-            # زرار Run Detection تحت الصورة + لون مميز
             if st.button("Run Detection", key="run-left", use_container_width=True):
                 with st.spinner("Running YOLO inference..."):
                     results = model(image, conf=conf_threshold)
