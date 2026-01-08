@@ -1,7 +1,7 @@
 streamlit
 ultralytics
 opencv-python-headless==4.8.1.78
-numpy<2  # downgrade to NumPy 1.x
+numpy==1.26.4
 Pillow
 matplotlib
 torch
