@@ -131,7 +131,7 @@ Not intended for clinical diagnosis.
 @st.cache_resource
 def load_model():
     try:
-        model = YOLO("models/best.pt")
+        model = YOLO("Models/best.pt")
         return model
     except Exception as e:
         st.error(f"Error loading model: {e}")
