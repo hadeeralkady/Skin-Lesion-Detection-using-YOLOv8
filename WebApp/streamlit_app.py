@@ -101,51 +101,90 @@ if st.session_state.show_intro:
 # =====================================================
 if page == "Detection":
 
+    mode = st.radio("Choose detection mode:", ("Single Image", "Folder Mode"))
+
     left, right = st.columns([1, 1])
 
-    # -------- Upload + Detection --------
-    with left:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.markdown("### 📤 Upload Image")
-        uploaded_file = st.file_uploader(
-            "Dermoscopic image (JPG / PNG)",
-            type=["jpg", "jpeg", "png"]
-        )
+    if mode == "Single Image":
+        # -------- Upload + Detection --------
+        with left:
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.markdown("### 📤 Upload Image")
+            uploaded_file = st.file_uploader(
+                "Dermoscopic image (JPG / PNG)",
+                type=["jpg", "jpeg", "png"]
+            )
 
-        if uploaded_file:
-            image = Image.open(uploaded_file).convert("RGB")
-            st.image(image, use_container_width=True)
+            if uploaded_file:
+                image = Image.open(uploaded_file).convert("RGB")
+                st.image(image, use_container_width=True)
 
-            if st.button("Run Detection", key="run-left", use_container_width=True):
-                with st.spinner("Running YOLO inference..."):
-                    results = model(image, conf=conf_threshold)
-                result = results[0]
-                st.session_state.last_result = result
+                if st.button("Run Detection", key="run-left", use_container_width=True):
+                    with st.spinner("Running YOLO inference..."):
+                        results = model(image, conf=conf_threshold)
+                    result = results[0]
+                    st.session_state.last_result = result
 
-        st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-    # -------- Output Section --------
-    with right:
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.markdown("### 🧪 Detection Output")
+        # -------- Output Section --------
+        with right:
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.markdown("### 🧪 Detection Output")
 
-        if "last_result" in st.session_state:
-            result = st.session_state.last_result
-            st.image(result.plot(), use_container_width=True)
+            if "last_result" in st.session_state:
+                result = st.session_state.last_result
+                st.image(result.plot(), use_container_width=True)
 
-            if result.boxes and len(result.boxes) > 0:
-                st.markdown("### 📊 Detection Summary")
-                for i, box in enumerate(result.boxes):
-                    conf = float(box.conf[0])
-                    st.markdown(
-                        f"<div class='card'>Lesion {i+1}<br>Confidence: {conf:.2f}</div>",
-                        unsafe_allow_html=True
-                    )
-            else:
-                st.warning("No lesion detected at the selected confidence level.")
+                if result.boxes and len(result.boxes) > 0:
+                    st.markdown("### 📊 Detection Summary")
+                    for i, box in enumerate(result.boxes):
+                        conf = float(box.conf[0])
+                        st.markdown(
+                            f"<div class='card'>Lesion {i+1}<br>Confidence: {conf:.2f}</div>",
+                            unsafe_allow_html=True
+                        )
+                else:
+                    st.warning("No lesion detected at the selected confidence level.")
 
-        st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
+    else:  # Folder Mode
+        with left:
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.markdown("### 📂 Folder Mode")
+            folder_path = st.text_input(
+                "Enter folder path (example):",
+                r"C:\Users\Project\test"
+            )
+
+            if st.button("Run Detection on Folder & Save"):
+                if not os.path.isdir(folder_path):
+                    st.error("❌ Invalid folder path")
+                else:
+                    images = [
+                        f for f in os.listdir(folder_path)
+                        if f.lower().endswith((".jpg", ".png", ".jpeg"))
+                    ]
+
+                    if len(images) == 0:
+                        st.warning("⚠️ No images found in folder")
+                    else:
+                        st.success(f"✅ Found {len(images)} images")
+
+                        for img_name in images:
+                            img_path = os.path.join(folder_path, img_name)
+                            result_img = model(img_path, conf=conf_threshold)[0].plot()
+                            st.image(result_img, caption=img_name, use_column_width=True)
+
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # -------- Output Section (Right Column Empty for Folder Mode) --------
+        with right:
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.markdown("### 🧪 Detection Output")
+            st.markdown("Folder Mode results will be displayed on the left.")
+            st.markdown("</div>", unsafe_allow_html=True)
 # =====================================================
 # METRICS PAGE
 # =====================================================
