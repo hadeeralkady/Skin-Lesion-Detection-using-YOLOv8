@@ -1,6 +1,11 @@
 # Skin Lesion Detection & Classification (YOLOv8 + ResNet18)
 
 ---
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![PyTorch](https://img.shields.io/badge/PyTorch-1.14+-orange)
+![Ultralytics YOLO](https://img.shields.io/badge/Ultralytics%20YOLOv8-v8-green)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.24+-cyan)
+![Dataset](https://img.shields.io/badge/Dataset-ISIC%20(Private)-lightgrey)
 
 ## 📌 Project Overview
 
