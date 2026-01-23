@@ -136,9 +136,7 @@ epochs=50
 | Optimizer            | Adam / SGD                    |
 | Learning Rate        | 1e-3 (typical starting value) |
 | Epochs               | 20–30                         |
-
-* Data augmentation (rotation, flip, color jitter) improves performance  
-* Model trained on cropped lesion images or full image (depending on pipeline)  
+  
 * Final model saved as `resnet18_model.pth`
 
 ---
