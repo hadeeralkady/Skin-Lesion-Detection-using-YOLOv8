@@ -190,18 +190,6 @@ An interactive **Streamlit UI** is provided for inference:
 
 ---
 
-## 🚀 Future Work
-
-* Increase training epochs with data augmentation  
-* Experiment with YOLOv8m / YOLOv8l  
-* Add segmentation-based models  
-* Integrate Grad-CAM visualizations  
-* Improve small lesion detection  
-* Add a unified pipeline: detection → crop → classification  
-* Deploy on cloud (Heroku / Streamlit Cloud)
-
----
-
 ## 🧑‍💻 Technologies Used
 
 * Python 3.10+  
