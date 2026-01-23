@@ -1,12 +1,13 @@
-# Skin Lesion Detection & Classification (YOLOv8 + ResNet18)
-
----
 ![Python](https://img.shields.io/badge/Python-3.10+-blue)
 ![PyTorch](https://img.shields.io/badge/PyTorch-1.14+-orange)
 ![Ultralytics YOLO](https://img.shields.io/badge/Ultralytics%20YOLOv8-v8-green)
+
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.24+-cyan)
 ![Dataset](https://img.shields.io/badge/Dataset-ISIC%20(Private)-lightgrey)
 
+# Skin Lesion Detection & Classification (YOLOv8 + ResNet18)
+
+---
 ## 📌 Project Overview
 
 This project presents an **end-to-end deep learning pipeline** for detecting **skin lesion regions** in dermoscopic images using **YOLOv8**, and classifying the detected lesions into **3 classes (MEL, NV, BKL)** using **ResNet18**.
