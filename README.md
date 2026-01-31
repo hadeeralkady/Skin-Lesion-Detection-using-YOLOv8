@@ -59,7 +59,23 @@ We developed an interactive dashboard to bridge the gap between research and cli
    ```bash
    git clone https://github.com/hadeeralkady/Skin-Lesion-Detection-using-YOLOv8.git
    cd Skin-Lesion-Detection-using-YOLOv8
+---
 
+## 🖥️ Interactive Research Demo
+🚀 **Live Application:** [Access the Skin Lesion Detection Dashboard](https://skin-lesion-detection-using-yolov8-in93l9bywmlu59dwlvk5w9.streamlit.app/)
+
+### 🧪 How to test the app:
+If you don't have dermoscopic images on your device, you can use the sample images provided in this repository:
+1.  Navigate to the [**/Dataset/**](https://github.com/hadeeralkady/Skin-Lesion-Detection-using-YOLOv8/tree/main/Dataset) folder.
+2.  Download any sample image (e.g., `ISIC_0035560.jpg` or `ISIC_0035565.jpg`).
+3.  Upload the image to the **Live Demo** and observe the detection and classification results.
+
+Our Streamlit-based dashboard allows for:
+*   **Instant Analysis:** Upload dermoscopic images for real-time localization and classification.
+*   **Dynamic Tuning:** Adjust confidence thresholds (0.05 - 0.90) to observe model behavior.
+*   **Clinical Insight:** View bounding boxes and probability scores for MEL, NV, and BKL.
+
+---
 ## Challenges & Observations
 
 * Model performance was sensitive to confidence threshold  
