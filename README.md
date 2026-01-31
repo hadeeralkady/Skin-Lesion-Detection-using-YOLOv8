@@ -1,190 +1,64 @@
-# Skin Lesion Detection & Classification (YOLOv8 + ResNet18)
+# Is Segmentation Necessary? A Detection-Guided Classification Framework for Skin Lesion Analysis
+
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/release/python-3120/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.5.0-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/)
+[![YOLOv8](https://img.shields.io/badge/YOLO-v8-00ffff?logo=ultralytics)](https://github.com/ultralytics/ultralytics)
+[![Streamlit](https://img.shields.io/badge/Deployment-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
 
 ---
-![Python](https://img.shields.io/badge/Python-3.10+-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.14+-orange)
-![Ultralytics YOLO](https://img.shields.io/badge/Ultralytics%20YOLOv8-v8-green)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.24+-cyan)
-![Dataset](https://img.shields.io/badge/Dataset-ISIC%20(Private)-lightgrey)
 
+## 📌 Abstract
+Traditional skin lesion analysis pipelines are often hindered by the high computational and annotation costs of pixel-level segmentation. This project investigates a critical research question: **Is explicit segmentation truly necessary for high-accuracy diagnosis?** 
 
-## 📌 Project Overview
-
-This project presents an **end-to-end deep learning pipeline** for detecting **skin lesion regions** in dermoscopic images using **YOLOv8**, and classifying the detected lesions into **3 classes (MEL, NV, BKL)** using **ResNet18**.
-
-The primary objective is **localizing suspicious lesion areas** and **classifying them**, not diagnosing diseases.
-
-The project demonstrates:
-
-* Medical image preprocessing
-* YOLOv8 fine-tuning (detection)
-* ResNet18 training (classification)
-* Model evaluation
-* Inference via **Streamlit Web App**
-* Ethical AI practices in medical imaging
+We propose a **segmentation-free, detection-guided framework** that integrates **YOLOv8** for precise lesion localization and **ResNet18** for multi-class categorization (Melanoma, Nevus, Benign Keratosis). By treating localization as an object detection task, we achieve efficient, real-time diagnostic performance without the fragility of traditional segmentation masks.
 
 ---
 
 ## ⚠️ Medical Disclaimer
-
-> This project is intended **strictly for research and educational purposes**.  
-> It **must not** be used for medical diagnosis, treatment, or clinical decision-making.
+This project is intended strictly for **research and educational purposes**. It is not a medical device and must not be used for clinical diagnosis, treatment, or medical decision-making.
 
 ---
 
-## 🧠 Model Architecture
+## 🧠 System Architecture
+The framework is designed as a modular hierarchical pipeline that mimics a specialist's focus on pathological regions.
 
-### 1) Detection Model (YOLOv8)
-* **Base Model:** YOLOv8 (Ultralytics)
-* **Task:** Object Detection
-* **Input Size:** 640×640
-* **Output:** Bounding boxes around lesion regions
-
-YOLOv8 was chosen for its:
-
-* Real-time performance
-* Strong localization accuracy
-* Lightweight deployment suitability
-
-### 2) Classification Model (ResNet18)
-* **Base Model:** ResNet18 (PyTorch)
-* **Task:** Multi-class classification
-* **Input Size:** 224×224
-* **Output:** 3 classes: MEL, NV, BKL
-
-ResNet18 was chosen for its:
-
-* High accuracy with limited data
-* Fast training and inference
-* Lightweight deployment suitability
+1.  **Stage 1: Localization (YOLOv8):** An anchor-free detector identifies the lesion boundaries and generates coordinates.
+2.  **Stage 2: ROI bridge:** The system dynamically crops and resizes the detected region to 224x224 pixels.
+3.  **Stage 3: Diagnostic Classification (ResNet18):** A Deep Residual Network performs the final diagnosis on the localized Region of Interest (ROI).
 
 ---
 
-## 📂 Dataset
-
-### Dataset Source
-
-This project uses dermoscopic images from the:
-
-**ISIC (ISIC2018_Task1-2_Training)– International Skin Imaging Collaboration Archive**  
-🔗 https://www.isic-archive.com
-
-### Dataset Usage
-
-Due to **licensing, privacy, and ethical constraints**, the dataset is **not included** in this repository.
-
-Researchers wishing to reproduce the results must:
-
-1. Download images from the official ISIC website
-2. Convert annotations to YOLO format (for detection)
-3. Prepare classification labels (MEL, NV, BKL)
-4. Organize data according to the structure below
-
-```
-YOLO_dataset/
-├── images/
-│   ├── train/
-│   ├── val/
-│   └── test/
-├── labels/
-│   ├── train/
-│   ├── val/
-│   └── test/
-└── dataset.yaml
-```
+## 🚀 Key Research Contributions
+*   **Adaptive Small-Object Scaling:** Implemented a **2.0x scaling factor** for small-scale lesions to preserve peripheral skin context, critical for border irregularity analysis.
+*   **Automated Label Engineering:** Developed custom scripts to transform **ISIC 2018 Task 1** binary segmentation masks into YOLO-compliant bounding box labels.
+*   **Class Imbalance Mitigation:** Utilized a `WeightedRandomSampler` and class-weighted Cross-Entropy loss to address the high frequency of Melanocytic Nevus samples in the HAM10000 dataset.
+*   **Real-Time Deployment:** Optimized the pipeline for CPU-based inference with a latency of **~59.0 ms**, making it suitable for point-of-care screening.
 
 ---
 
-## Training Details (Detection)
+## 📊 Experimental Results
+The framework was evaluated on the **ISIC 2018 (HAM10000)** benchmark.
 
-| Parameter            | Value                                          |
-| -------------------- | ---------------------------------------------- |
-| Epochs               | 50 (fine-tuned from pretrained YOLOv8 weights) |
-| Images               | 1816 training images                           |
-| Image Size           | 640                                            |
-| Optimizer            | Default YOLOv8 (AdamW – auto-selected)         |
-| Confidence Threshold | 0.2 – 0.25                                     |
-
-* Training was performed using CPU  
-* Model convergence was achieved within 50 epochs  
-* Small-object sensitivity was improved by dataset preprocessing and bounding box adjustments  
-* Final model selected based on best validation mAP  
-
-### Training Command Example (YOLOv8)
-
-```bash
-yolo detect train \
-model=yolov8n.pt \
-data=dataset.yaml \
-epochs=120 \
-imgsz=640
-```
-
-To **continue training from an existing model**:
-
-```bash
-yolo detect train \
-model=path/to/best.pt \
-data=dataset.yaml \
-epochs=50
-```
-
----
-
-## Training Details (Classification)
-
-| Parameter            | Value                         |
-| -------------------- | ----------------------------- |
-| Model                | ResNet18                      |
-| Classes              | 3 (MEL, NV, BKL)              |
-| Input Size           | 224×224                       |
-| Batch Size           | 16–32 (depending on GPU)      |
-| Optimizer            | Adam / SGD                    |
-| Learning Rate        | 1e-3 (typical starting value) |
-| Epochs               | 20–30                         |
-  
-* Final model saved as `resnet18_model.pth`
-
----
-
-## 📊 Evaluation
-
-### Detection Evaluation
-Validation was performed using YOLO built-in evaluation tools.
-
-Generated outputs include:
-
-* Precision
-* Recall
-* mAP@0.5
-* Prediction visualizations
-
-Confidence threshold tuning was required due to:
-
-* Small lesion sizes
-* Low contrast medical images
-
-### Classification Evaluation
-Classification performance was evaluated using:
-
-* Accuracy
-* Precision / Recall
-* Confusion Matrix
+| Component | Metric | Value |
+| :--- | :--- | :--- |
+| **Localization (YOLOv8)** | mAP @ 0.5 | **98.6%** |
+| **Localization (YOLOv8)** | Precision | **96.3%** |
+| **Diagnostic (ResNet18)** | Validation Accuracy | **91.0%** |
+| **Inference Latency** | Time per image (CPU) | **~59.0 ms** |
 
 ---
 
 ## 🖥️ Streamlit Web Application
+We developed an interactive dashboard to bridge the gap between research and clinical utility.
+*   **Upload & Analyze:** Drag and drop dermoscopic images for instant analysis.
+*   **Threshold Tuning:** Interactively adjust the confidence threshold (0.05 to 0.90) to observe model sensitivity.
+*   **Visual Summary:** Real-time display of bounding boxes and class probabilities.
 
-An interactive **Streamlit UI** is provided for inference:
-
-### Features
-
-* Single image prediction
-* YOLO detection (bounding box)
-* ResNet18 classification (class + confidence)
-* Adjustable confidence threshold
-
----
+### How to run:
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/hadeeralkady/Skin-Lesion-Detection-using-YOLOv8.git
+   cd Skin-Lesion-Detection-using-YOLOv8
 
 ## 🧪 Challenges & Observations
 
@@ -206,6 +80,21 @@ An interactive **Streamlit UI** is provided for inference:
 * Matplotlib  
 
 ---
+## 1- Install dependencies:
+pip install -r requirements.txt
+## 2- Launch the app:
+streamlit run streamlit_app.py
+
+## 📂 Project Structure
+├── models/               # Pre-trained weights (best.pt, resnet18_model.pth)
+├── notebooks/            # Data transformation & training scripts
+├── streamlit_app.py      # Web application source code
+├── pipeline.png          # System architecture diagram
+└── requirements.txt      # List of required Python libraries
+
+## 🧑‍💻 Authors
+Hadeer Elkady - hadeeralkady
+Hagar Galal - hagarsliem
 
 ## 🤝 Acknowledgments
 
