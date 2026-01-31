@@ -4,7 +4,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.5.0-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/)
 [![YOLOv8](https://img.shields.io/badge/YOLO-v8-00ffff?logo=ultralytics)](https://github.com/ultralytics/ultralytics)
 [![Streamlit](https://img.shields.io/badge/Deployment-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
-
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://skin-lesion-detection-using-yolov8-in93l9bywmlu59dwlvk5w9.streamlit.app/)
 ---
 
 ## Abstract
