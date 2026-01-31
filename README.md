@@ -37,7 +37,7 @@ The framework is designed as a modular hierarchical pipeline that mimics a speci
 ---
 
 ## 📊 Experimental Results
-The framework was evaluated on the **ISIC 2018 (HAM10000)** benchmark.
+The framework was evaluated on the **ISIC 2018 (Task 1,3)** benchmark.
 
 | Component | Metric | Value |
 | :--- | :--- | :--- |
