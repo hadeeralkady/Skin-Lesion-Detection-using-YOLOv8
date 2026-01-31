@@ -90,8 +90,8 @@ We developed an interactive dashboard to bridge the gap between research and cli
    streamlit run streamlit_app.py
 
 ## 🧑‍💻 Authors
-Hadeer Elkady - hadeeralkady
-Hagar Galal - hagarsliem
+Hadeer Elkady 
+Hagar Galal
 
 ## 🤝 Acknowledgments
 
