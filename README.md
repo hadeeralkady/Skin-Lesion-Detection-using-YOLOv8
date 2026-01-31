@@ -80,10 +80,13 @@ We developed an interactive dashboard to bridge the gap between research and cli
 * Matplotlib  
 
 ---
-## 1- Install dependencies:
-pip install -r requirements.txt
-## 2- Launch the app:
-streamlit run streamlit_app.py
+### 1- Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+
+### 2- Launch the app:
+   ```bash
+   streamlit run streamlit_app.py
 
 ## 🧑‍💻 Authors
 Hadeer Elkady - hadeeralkady
