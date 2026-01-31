@@ -90,8 +90,11 @@ We developed an interactive dashboard to bridge the gap between research and cli
    streamlit run streamlit_app.py
 
 ## 🧑‍💻 Authors
-Hadeer Elkady 
-Hagar Galal
+
+| Name | GitHub Profile |
+| :--- | :--- |
+| **Hadeer Elkady** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-blue?style=flat&logo=github)]([https://github.com/hadeeralkady](https://github.com/hadeeralkady)) |
+| **Hagar Galal** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-blue?style=flat&logo=github)](https://github.com/hagarsliem) |
 
 ## 🤝 Acknowledgments
 
