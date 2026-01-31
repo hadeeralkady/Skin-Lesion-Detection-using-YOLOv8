@@ -85,13 +85,6 @@ pip install -r requirements.txt
 ## 2- Launch the app:
 streamlit run streamlit_app.py
 
-## 📂 Project Structure
-├── models/               # Pre-trained weights (best.pt, resnet18_model.pth)
-├── notebooks/            # Data transformation & training scripts
-├── streamlit_app.py      # Web application source code
-├── pipeline.png          # System architecture diagram
-└── requirements.txt      # List of required Python libraries
-
 ## 🧑‍💻 Authors
 Hadeer Elkady - hadeeralkady
 Hagar Galal - hagarsliem
