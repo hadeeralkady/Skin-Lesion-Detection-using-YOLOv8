@@ -7,19 +7,19 @@
 
 ---
 
-## 📌 Abstract
+## Abstract
 Traditional skin lesion analysis pipelines are often hindered by the high computational and annotation costs of pixel-level segmentation. This project investigates a critical research question: **Is explicit segmentation truly necessary for high-accuracy diagnosis?** 
 
 We propose a **segmentation-free, detection-guided framework** that integrates **YOLOv8** for precise lesion localization and **ResNet18** for multi-class categorization (Melanoma, Nevus, Benign Keratosis). By treating localization as an object detection task, we achieve efficient, real-time diagnostic performance without the fragility of traditional segmentation masks.
 
 ---
 
-## ⚠️ Medical Disclaimer
+## Medical Disclaimer
 This project is intended strictly for **research and educational purposes**. It is not a medical device and must not be used for clinical diagnosis, treatment, or medical decision-making.
 
 ---
 
-## 🧠 System Architecture
+## System Architecture
 The framework is designed as a modular hierarchical pipeline that mimics a specialist's focus on pathological regions.
 
 1.  **Stage 1: Localization (YOLOv8):** An anchor-free detector identifies the lesion boundaries and generates coordinates.
@@ -28,7 +28,7 @@ The framework is designed as a modular hierarchical pipeline that mimics a speci
 
 ---
 
-## 🚀 Key Research Contributions
+## Key Research Contributions
 *   **Adaptive Small-Object Scaling:** Implemented a **2.0x scaling factor** for small-scale lesions to preserve peripheral skin context, critical for border irregularity analysis.
 *   **Automated Label Engineering:** Developed custom scripts to transform **ISIC 2018 Task 1** binary segmentation masks into YOLO-compliant bounding box labels.
 *   **Class Imbalance Mitigation:** Utilized a `WeightedRandomSampler` and class-weighted Cross-Entropy loss to address the high frequency of Melanocytic Nevus samples in the HAM10000 dataset.
@@ -36,7 +36,7 @@ The framework is designed as a modular hierarchical pipeline that mimics a speci
 
 ---
 
-## 📊 Experimental Results
+## Experimental Results
 The framework was evaluated on the **ISIC 2018 (Task 1,3)** benchmark.
 
 | Component | Metric | Value |
@@ -48,7 +48,7 @@ The framework was evaluated on the **ISIC 2018 (Task 1,3)** benchmark.
 
 ---
 
-## 🖥️ Streamlit Web Application
+## Streamlit Web Application
 We developed an interactive dashboard to bridge the gap between research and clinical utility.
 *   **Upload & Analyze:** Drag and drop dermoscopic images for instant analysis.
 *   **Threshold Tuning:** Interactively adjust the confidence threshold (0.05 to 0.90) to observe model sensitivity.
@@ -60,7 +60,7 @@ We developed an interactive dashboard to bridge the gap between research and cli
    git clone https://github.com/hadeeralkady/Skin-Lesion-Detection-using-YOLOv8.git
    cd Skin-Lesion-Detection-using-YOLOv8
 
-## 🧪 Challenges & Observations
+## Challenges & Observations
 
 * Model performance was sensitive to confidence threshold  
 * Best predictions observed at **0.2 – 0.25**  
@@ -70,7 +70,7 @@ We developed an interactive dashboard to bridge the gap between research and cli
 
 ---
 
-## 🧑‍💻 Technologies Used
+## Technologies Used
 
 * Python 3.10+  
 * PyTorch  
