@@ -81,11 +81,11 @@ We developed an interactive dashboard to bridge the gap between research and cli
 
 ---
 ### 1- Install dependencies:
-   ```bash
+   ``bash
    pip install -r requirements.txt
 
 ### 2- Launch the app:
-   ```bash
+   ``bash
    streamlit run streamlit_app.py
 
 ## 🧑‍💻 Authors
